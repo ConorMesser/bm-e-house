@@ -7,8 +7,10 @@ def draw_house():
     Note: Utilizes the turtle graphics package.
     """
     t.screensize(1500, 1500)
-    house_x = 50
+    t.setworldcoordinates(0, 0, 1500, 1500)
+    house_x = 300
     house_y = 300
+    t.penup()
 
     # draw house with height ~600, width ~500
 
@@ -22,10 +24,10 @@ def draw_house():
     # draw three 2nd story windows (same size)
     for i in range(3):
         relative_window_x_pos = 150 * i + 50  # starts 50 from edge of house and 50 between each window
-        draw_window(house_x + relative_window_x_pos,400, 100, 100)
+        draw_window(house_x + relative_window_x_pos,   house_y + 400, 100, 100)
 
     # draw one 1st story window (next to door)
-    draw_window(house_x + 250, 120, 150, 150)
+    draw_window(house_x + 250, house_y + 120, 150, 150)
 
     # draw two trees (one on each side of house, slightly different heights)
 
@@ -49,7 +51,7 @@ def draw_door(x_pos, y_pos, width, height):
     # draw doorknob
     t.goto(x_pos + width * 4/5, y_pos + height * 1/2)
     t.down()
-    t.circle(width/50)
+    t.circle(width/25)
     t.up()
 
 
@@ -101,6 +103,7 @@ def draw_single_line(x_start, y_start, length, heading):
     :return: None
     """
     t.goto(x_start, y_start)
+    t.setheading(heading)
     t.down()
     t.forward(length)
     t.up()
