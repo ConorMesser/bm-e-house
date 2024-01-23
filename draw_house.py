@@ -210,6 +210,14 @@ def draw_garage_door(t, start_x, start_y, width, height):
 
 
 def myFlatCloud(my_turtle, x_cloud, y_cloud):
+    """
+    Draw cloud with flat bottom at given position.
+
+    :param my_turtle: Turtle object
+    :param x_cloud: left-most x position of cloud (in pixels)
+    :param y_cloud: bottom-most y position of rectangle (in pixels)
+    :return: None
+    """
     my_turtle.pu()
     my_turtle.setheading(0)
     my_turtle.setpos(x_cloud,y_cloud)
@@ -247,6 +255,15 @@ def ellipse(my_turtle, radius, color):
 
 
 def myBumpyCloud(my_turtle, radius, x_cloud, y_cloud, cloud_color="blue"):
+    """
+    Draw cloud with all bumpy edges at given position.
+
+    :param my_turtle: Turtle object
+    :param radius: 
+    :param x_cloud: left-most x position of cloud (in pixels)
+    :param y_cloud: bottom-most y position of rectangle (in pixels)
+    :return: None
+    """
     my_turtle.pu()
     my_turtle.setheading(0)
     my_turtle.setpos(x_cloud,y_cloud)
