@@ -6,10 +6,12 @@ def draw_house():
 
     Note: Utilizes the turtle graphics package.
     """
-    t.screensize(1500, 1500)
+    screen = t.Screen()
+    screen.setup(1500, 1500)
 
     # create Turtle Object
     turtle_cursor = t.Turtle()
+    turtle_cursor.speed(100)
 
     # draw house with height ~600, width ~500
     x_rect1 = 0
@@ -41,7 +43,7 @@ def draw_house():
     radius = 50 
     x_bcloud = -800
     y_bcloud = 800
-    myBumpyCloud(radius, x_bcloud, y_bcloud, cloud_color="blue")
+    myBumpyCloud(turtle_cursor, radius, x_bcloud, y_bcloud, cloud_color="blue")
 
     t.mainloop()
 
@@ -160,7 +162,7 @@ def ellipse(radius, color):
         t.circle(radius//2,90)
     t.end_fill()
 
-def myBumpyCloud(radius, x_cloud, y_cloud, cloud_color="blue"):
+def myBumpyCloud(my_turtle, radius, x_cloud, y_cloud, cloud_color="blue"):
     my_turtle.pu()
     my_turtle.setpos(x_cloud,y_cloud)
     my_turtle.pd()
