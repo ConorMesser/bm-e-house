@@ -8,6 +8,9 @@ def draw_house():
     """
     t.screensize(1500, 1500)
 
+    # create Turtle Object
+    turtle_cursor = t.Turtle()
+
     # draw house with height ~600, width ~500
 
     # draw garage with height ~400, width ~300
