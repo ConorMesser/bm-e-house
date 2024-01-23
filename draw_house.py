@@ -17,32 +17,32 @@ def draw_house():
     turtle_cursor.penup()
 
     # draw house with height ~600, width ~500
-    x_house1 = 275
+    x_house = 275
     y_house = 100
-    drawRectangle(turtle_cursor, x_house1, y_house, 600, 500)
+    draw_rect(turtle_cursor, x_house, y_house, 500, 600)
 
     # draw garage with height ~400, width ~300
-    x_garage = x_house1 + 500
-    drawRectangle(turtle_cursor, x_garage, y_house, 400, 300)
+    x_garage = x_house + 500
+    draw_rect(turtle_cursor, x_garage, y_house, 300, 400)
 
     # draw (2) garage doors on garage
-    draw_garage_door(turtle_cursor, x_garage + 50, y_house, 100, 300)
-    draw_garage_door(turtle_cursor, x_garage + 175, y_house, 100, 300)
+    draw_garage_door(turtle_cursor, x_garage + 40, y_house, 100, 300)
+    draw_garage_door(turtle_cursor, x_garage + 160, y_house, 100, 300)
 
     # draw door on house
-    draw_door(turtle_cursor, x_house1 + 100, y_house, 100, 270)
+    draw_door(turtle_cursor, x_house + 100, y_house, 100, 270)
 
     # draw three 2nd story windows (same size)
     for i in range(3):
         relative_window_x_pos = 150 * i + 50  # starts 50 from edge of house and 50 between each window
-        draw_window(turtle_cursor, x_house1 + relative_window_x_pos,   y_house + 400, 100, 100)
+        draw_window(turtle_cursor, x_house + relative_window_x_pos,   y_house + 400, 100, 100)
 
     # draw one 1st story window (next to door)
-    draw_window(turtle_cursor, x_house1 + 250, y_house + 120, 150, 150)
+    draw_window(turtle_cursor, x_house + 250, y_house + 120, 150, 150)
 
     # draw two trees (one on each side of house, slightly different heights)
     draw_branches(turtle_cursor, 75, 150, y_house)
-    draw_branches(turtle_cursor, 75, 1250, y_house)
+    draw_branches(turtle_cursor, 90, 1300, y_house)
     
     # draw two clouds above house
     x_cloud = 300
@@ -53,7 +53,9 @@ def draw_house():
     y_bcloud = 1300
     myBumpyCloud(turtle_cursor, radius, x_bcloud, y_bcloud, cloud_color="blue")
 
+    # keep screen on until closed by user
     t.mainloop()
+
 
 def draw_branches(t, branch_length, start_x, start_y):
     t.penup() # lift the pen
@@ -86,6 +88,7 @@ def draw_window(cursor, x_pos, y_pos, width, height):
     """
     Draw window at given position of given size with crossing bars.
 
+    :param cursor: Turtle object
     :param x_pos: left-most x position of window (in pixels)
     :param y_pos: bottom-most y position of window (in pixels)
     :param width: width of window (in pixels)
@@ -103,6 +106,7 @@ def draw_rect(cursor, x_pos, y_pos, width, height):
     """
     Draw rectangle at given position of given size.
 
+    :param cursor: Turtle object
     :param x_pos: left-most x position of rectangle (in pixels)
     :param y_pos: bottom-most y position of rectangle (in pixels)
     :param width: width of rectangle (in pixels)
@@ -123,6 +127,7 @@ def draw_single_line(cursor, x_start, y_start, length, heading):
     """
     Draw line starting at given coordinates, of given length in direction of given heading.
 
+    :param cursor: Turtle object
     :param x_start: x coordinate for line endpoint
     :param y_start: y coordinate for line endpoint
     :param length: length of line
@@ -134,6 +139,7 @@ def draw_single_line(cursor, x_start, y_start, length, heading):
     cursor.down()
     cursor.forward(length)
     cursor.up()
+
 
 def draw_branch(t, branch_length):
     if branch_length > 5:
@@ -165,7 +171,8 @@ def draw_branch(t, branch_length):
         # draw leaves if branch short enough
         draw_leaves(t)
         
-    t.penup() # lift the pen
+    t.penup()  # lift the pen
+
 
 def draw_leaves(t):
     t.penup() # lift the pen
@@ -180,6 +187,7 @@ def draw_leaves(t):
     t.penup() # lift the pen
     t.forward(10) # move forward 10    
     t.pendown() # put the pen down
+
 
 def draw_garage_door(t, start_x, start_y, width, height):
     t.penup() # lift the pen
@@ -199,19 +207,7 @@ def draw_garage_door(t, start_x, start_y, width, height):
         t.forward(width)
 
     t.up()
-def drawRectangle(my_turtle, x_rect, y_rect, h, w):
-    my_turtle.pu()
-    my_turtle.setheading(0)
-    my_turtle.setpos(x_rect,y_rect)
-    my_turtle.pd()
-    my_turtle.forward(w)
-    my_turtle.left(90)
-    my_turtle.forward(h)
-    my_turtle.left(90)
-    my_turtle.forward(w)
-    my_turtle.left(90)
-    my_turtle.forward(h)
-    my_turtle.pu()
+
 
 def myFlatCloud(my_turtle, x_cloud, y_cloud):
     my_turtle.pu()
@@ -236,10 +232,10 @@ def myFlatCloud(my_turtle, x_cloud, y_cloud):
         my_turtle.left(190)
     my_turtle.left(160)
     current_pos = my_turtle.pos()
-    #print((current_pos[1]-turt_pos[1]))
     my_turtle.forward((current_pos[1]-turt_pos[1]))
     my_turtle.left(90)
     my_turtle.forward((turt_pos[0]-current_pos[0]))
+
 
 def ellipse(my_turtle, radius, color):
     my_turtle.color(color,color)
@@ -248,6 +244,7 @@ def ellipse(my_turtle, radius, color):
         my_turtle.circle(radius,90)
         my_turtle.circle(radius//2,90)
     my_turtle.end_fill()
+
 
 def myBumpyCloud(my_turtle, radius, x_cloud, y_cloud, cloud_color="blue"):
     my_turtle.pu()
@@ -259,6 +256,7 @@ def myBumpyCloud(my_turtle, radius, x_cloud, y_cloud, cloud_color="blue"):
     for i in range(1,7):
         ellipse(my_turtle, radius,cloud_color)
         my_turtle.right(60)
+
 
 if __name__ == '__main__':
     draw_house()
