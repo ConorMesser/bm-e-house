@@ -22,40 +22,38 @@ def draw_house(world_width, world_height):
     # draw house 
     x_house = 1/5 * world_width
     y_house = 1/15 * world_height
-    house_width = 1/3 * world_width
-    house_height = 6/15 * world_height
-    draw_rect(turtle_cursor, x_house, y_house, house_width, house_height)
+    draw_rect(turtle_cursor, x_house, y_house, 1/3 * world_width, 6/15 * world_height)
 
-    # draw garage with height ~400, width ~300
-    x_garage = x_house + 500
-    draw_rect(turtle_cursor, x_garage, y_house, 300, 400)
+    # draw garage 
+    x_garage = x_house + 1/3 * world_width
+    draw_rect(turtle_cursor, x_garage, y_house, 1/5 * world_width, 4/15 * world_height)
 
     # draw (2) garage doors on garage
-    draw_garage_door(turtle_cursor, x_garage + 40, y_house, 100, 300)
-    draw_garage_door(turtle_cursor, x_garage + 160, y_house, 100, 300)
+    draw_garage_door(turtle_cursor, x_garage + 0.03 * world_width, y_house, 1/15 * world_width, 3/15 * world_height)
+    draw_garage_door(turtle_cursor, x_garage + 0.1 * world_width, y_house, 1/15 * world_width, 3/15 * world_height)
 
     # draw door on house
-    draw_door(turtle_cursor, x_house + 100, y_house, 100, 270)
+    draw_door(turtle_cursor, x_house + 1/15 * world_width, y_house, 1/15 * world_width, 1/5 * world_height)
 
     # draw three 2nd story windows (same size)
     for i in range(3):
-        relative_window_x_pos = 150 * i + 50  # starts 50 from edge of house and 50 between each window
-        draw_window(turtle_cursor, x_house + relative_window_x_pos,   y_house + 400, 100, 100)
+        relative_window_x_pos = 1/10 * world_width * i + 1/30 * world_width  
+        draw_window(turtle_cursor, x_house + relative_window_x_pos, y_house + 4/15 * world_width, 1/15 * world_width, 1/15 * world_height)
 
     # draw one 1st story window (next to door)
-    draw_window(turtle_cursor, x_house + 250, y_house + 120, 150, 150)
+    draw_window(turtle_cursor, x_house + 1/6 * world_width, y_house + 1/10 * world_height, 1/10 * world_width, 1/10 * world_height)
 
     # draw two trees (one on each side of house, slightly different heights)
-    draw_branches(turtle_cursor, 75, 150, y_house, "brown")
-    draw_branches(turtle_cursor, 90, 1300, y_house, "brown")
+    draw_branches(turtle_cursor, 3/60 * world_width, 1/10 * world_width, y_house, "brown")
+    draw_branches(turtle_cursor, 3/50 * world_width, 13/15 * world_width, y_house, "brown")
     
     # draw two clouds above house
-    x_cloud = 300
-    y_cloud = 1200
+    x_cloud = 1/5 * world_width
+    y_cloud = 4/5 * world_height
     draw_flatcloud(turtle_cursor, x_cloud, y_cloud)
-    radius = 50 
-    x_bcloud = 900
-    y_bcloud = 1300
+    radius = 1/30 * world_width 
+    x_bcloud = 9/15 * world_width
+    y_bcloud = 13/15 * world_height
     draw_bumpycloud(turtle_cursor, radius, x_bcloud, y_bcloud, cloud_color="blue")
 
     # keep screen on until closed by user
