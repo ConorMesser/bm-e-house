@@ -1,25 +1,30 @@
 import turtle as t
 
 
-def draw_house():
+def draw_house(world_width, world_height):
     """Draw house with garage, 1 door, 4 windows, 2 trees, and 2 clouds on blank canvas.
+
+    :param world_width: width of world (in pixels)
+    :param world_height: height of world (in pixels)
 
     Note: Utilizes the turtle graphics package.
     """
-
+    # set up screen
     screen = t.Screen()
-    screen.setup(1500, 1500)
-    screen.setworldcoordinates(0, 0, 1500, 1500)
+    screen.setup(world_width, world_height)
+    screen.setworldcoordinates(0, 0, world_width, world_height)
 
-    # create Turtle Object
+    # create Turtle object
     turtle_cursor = t.Turtle()
-    turtle_cursor.speed(1000)
+    turtle_cursor.speed("fastest")
     turtle_cursor.penup()
 
-    # draw house with height ~600, width ~500
-    x_house = 275
-    y_house = 100
-    draw_rect(turtle_cursor, x_house, y_house, 500, 600)
+    # draw house 
+    x_house = 1/5 * world_width
+    y_house = 1/15 * world_height
+    house_width = 1/3 * world_width
+    house_height = 6/15 * world_height
+    draw_rect(turtle_cursor, x_house, y_house, house_width, house_height)
 
     # draw garage with height ~400, width ~300
     x_garage = x_house + 500
@@ -41,28 +46,89 @@ def draw_house():
     draw_window(turtle_cursor, x_house + 250, y_house + 120, 150, 150)
 
     # draw two trees (one on each side of house, slightly different heights)
-    draw_branches(turtle_cursor, 75, 150, y_house)
-    draw_branches(turtle_cursor, 90, 1300, y_house)
+    draw_branches(turtle_cursor, 75, 150, y_house, "brown")
+    draw_branches(turtle_cursor, 90, 1300, y_house, "brown")
     
     # draw two clouds above house
     x_cloud = 300
     y_cloud = 1200
-    myFlatCloud(turtle_cursor, x_cloud, y_cloud)
+    draw_flatcloud(turtle_cursor, x_cloud, y_cloud)
     radius = 50 
     x_bcloud = 900
     y_bcloud = 1300
-    myBumpyCloud(turtle_cursor, radius, x_bcloud, y_bcloud, cloud_color="blue")
+    draw_bumpycloud(turtle_cursor, radius, x_bcloud, y_bcloud, cloud_color="blue")
 
     # keep screen on until closed by user
     t.mainloop()
 
 
-def draw_branches(t, branch_length, start_x, start_y):
+def draw_branches(t, branch_length, start_x, start_y, color):
+    """
+    Draw branches at given position of given branch_length.
+
+    :param t: turtle cursor
+    :param branch_length: branch_length (in pixels)
+    :param start_x: left-most x position of first branch (in pixels)
+    :param start_y: bottom-most y position of first branch (in pixels)
+    :return: None
+    """
     t.penup() # lift the pen
     t.goto(start_x, start_y) # place it on x, y
     t.setheading(90) # point the pen upwards
     t.pendown() # put the pen down
-    draw_branch(t, branch_length)
+    draw_branch(t, branch_length, color)
+
+def draw_branch(t, branch_length, color):
+    """
+    Draw branches off of initial branch recursively.
+
+    :param t: turtle cursor
+    :param branch_length: branch_length (in pixels)
+    """
+    if branch_length > 5:
+        t.color(color)
+        t.forward(branch_length)
+        # save state
+        pos = t.position()
+        heading = t.heading()
+        # draw right branch
+        t.right(20)
+        draw_branch(t, branch_length - 15)
+        # restore state and draw left branch
+        t.penup()
+        t.goto(pos)
+        t.setheading(heading)
+        t.pendown()
+        t.left(40)
+        draw_branch(t, branch_length - 15)
+        # restore state
+        t.penup()
+        t.goto(pos)
+        t.setheading(heading)
+        t.pendown()
+    else:
+        # draw leaves if branch short enough
+        draw_leaves(t)
+    t.penup()  # lift the pen
+
+def draw_leaves(t):
+    """
+    Draw leaves off of smallest last branch.
+    
+    :param t: turtle cursor
+    """
+    t.penup() # lift the pen
+    t.forward(10) # move forward 10
+    t.pendown() # put the pen down
+    t.color("green") # set the color to green
+    t.begin_fill()
+    t.circle(5)
+    t.end_fill()
+    t.color("brown") # reset the color
+    t.right(180) # turn right 180 degrees
+    t.penup() # lift the pen
+    t.forward(10) # move forward 10    
+    t.pendown() # put the pen down
 
 
 def draw_door(cursor, x_pos, y_pos, width, height):
@@ -140,55 +206,6 @@ def draw_single_line(cursor, x_start, y_start, length, heading):
     cursor.forward(length)
     cursor.up()
 
-
-def draw_branch(t, branch_length):
-    if branch_length > 5:
-        t.color('brown')
-        t.forward(branch_length)
-
-        # save state
-        pos = t.position()
-        heading = t.heading()
-
-        # draw right branch
-        t.right(20)
-        draw_branch(t, branch_length - 15)
-
-        # restore state and draw left branch
-        t.penup()
-        t.goto(pos)
-        t.setheading(heading)
-        t.pendown()
-        t.left(40)
-        draw_branch(t, branch_length - 15)
-
-        # restore state
-        t.penup()
-        t.goto(pos)
-        t.setheading(heading)
-        t.pendown()
-    else:
-        # draw leaves if branch short enough
-        draw_leaves(t)
-        
-    t.penup()  # lift the pen
-
-
-def draw_leaves(t):
-    t.penup() # lift the pen
-    t.forward(10) # move forward 10
-    t.pendown() # put the pen down
-    t.color("green") # set the color to green
-    t.begin_fill()
-    t.circle(5)
-    t.end_fill()
-    t.color("brown") # reset the color
-    t.right(180) # turn right 180 degrees
-    t.penup() # lift the pen
-    t.forward(10) # move forward 10    
-    t.pendown() # put the pen down
-
-
 def draw_garage_door(t, start_x, start_y, width, height):
     t.penup() # lift the pen
     t.goto(start_x, start_y) # place it on x, y
@@ -209,12 +226,12 @@ def draw_garage_door(t, start_x, start_y, width, height):
     t.up()
 
 
-def myFlatCloud(my_turtle, x_cloud, y_cloud):
+def draw_flatcloud(my_turtle, x_cloud, y_cloud):
     my_turtle.pu()
     my_turtle.setheading(0)
     my_turtle.setpos(x_cloud,y_cloud)
     my_turtle.pd()
-    my_turtle.color('blue')
+    my_turtle.color("blue")
     my_turtle.forward(150)
     my_turtle.left(90)
     turt_pos = my_turtle.pos()
@@ -246,7 +263,7 @@ def ellipse(my_turtle, radius, color):
     my_turtle.end_fill()
 
 
-def myBumpyCloud(my_turtle, radius, x_cloud, y_cloud, cloud_color="blue"):
+def draw_bumpycloud(my_turtle, radius, x_cloud, y_cloud, cloud_color="blue"):
     my_turtle.pu()
     my_turtle.setheading(0)
     my_turtle.setpos(x_cloud,y_cloud)
