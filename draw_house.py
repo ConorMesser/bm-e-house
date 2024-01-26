@@ -102,7 +102,7 @@ def draw_window(cursor, x_pos, y_pos, width, height):
     draw_single_line(cursor, x_pos+width/2, y_pos, height, 90)
 
 
-def draw_rect(cursor, x_pos, y_pos, width, height):
+def draw_rect(cursor, x_pos, y_pos, width, height):  # todo test
     """
     Draw rectangle at given position of given size.
 
@@ -115,15 +115,15 @@ def draw_rect(cursor, x_pos, y_pos, width, height):
     """
     cursor.goto(x_pos, y_pos)
     cursor.down()
-    cursor.setheading(90)
+    cursor.setheading(90)  # todo add as input? with default
 
-    for dim in (height, width)*2:
+    for dim in (height, width)*2:  # todo make clearer
         cursor.forward(dim)
         cursor.right(90)
     cursor.up()
 
 
-def draw_single_line(cursor, x_start, y_start, length, heading):
+def draw_single_line(cursor, x_start, y_start, length, heading):  # todo test
     """
     Draw line starting at given coordinates, of given length in direction of given heading.
 
@@ -237,7 +237,7 @@ def myFlatCloud(my_turtle, x_cloud, y_cloud):
     my_turtle.forward((turt_pos[0]-current_pos[0]))
 
 
-def ellipse(my_turtle, radius, color):
+def ellipse(my_turtle, radius, color):  # todo add second radius input?
     my_turtle.color(color,color)
     my_turtle.begin_fill()
     for i in range(2):
