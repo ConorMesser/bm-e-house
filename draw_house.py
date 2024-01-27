@@ -1,71 +1,135 @@
 import turtle as t
 
 
-def draw_house():
+def draw_house(world_width, world_height):
     """Draw house with garage, 1 door, 4 windows, 2 trees, and 2 clouds on blank canvas.
+
+    :param world_width: width of world (in pixels)
+    :param world_height: height of world (in pixels)
 
     Note: Utilizes the turtle graphics package.
     """
-
+    # set up screen
     screen = t.Screen()
-    screen.setup(1500, 1500)
-    screen.setworldcoordinates(0, 0, 1500, 1500)
+    screen.setup(world_width, world_height)
+    screen.setworldcoordinates(0, 0, world_width, world_height)
 
-    # create Turtle Object
+    # create Turtle object
     turtle_cursor = t.Turtle()
-    turtle_cursor.speed(1000)
+    turtle_cursor.speed("fastest")
     turtle_cursor.penup()
 
-    # draw house with height ~600, width ~500
-    x_house = 275
-    y_house = 100
-    draw_rect(turtle_cursor, x_house, y_house, 500, 600)
+    # draw house
+    x_house = 1/5 * world_width
+    y_house = 1/15 * world_height
+    draw_rect(turtle_cursor, x_house, y_house, 1/3 * world_width, 6/15 * world_height)
 
-    # draw garage with height ~400, width ~300
-    x_garage = x_house + 500
-    draw_rect(turtle_cursor, x_garage, y_house, 300, 400)
+    # draw garage
+    x_garage = x_house + 1/3 * world_width
+    draw_rect(turtle_cursor, x_garage, y_house, 1/5 * world_width, 4/15 * world_height)
 
     # draw (2) garage doors on garage
-    draw_garage_door(turtle_cursor, x_garage + 40, y_house, 100, 300)
-    draw_garage_door(turtle_cursor, x_garage + 160, y_house, 100, 300)
+    draw_garage_door(turtle_cursor, x_garage + 0.03 * world_width, y_house, 1/15 * world_width, 3/15 * world_height)
+    draw_garage_door(turtle_cursor, x_garage + 0.1 * world_width, y_house, 1/15 * world_width, 3/15 * world_height)
 
     # draw door on house
-    draw_door(turtle_cursor, x_house + 100, y_house, 100, 270)
+    draw_door(turtle_cursor, x_house + 1/15 * world_width, y_house, 1/15 * world_width, 1/5 * world_height, world_width)
 
     # draw three 2nd story windows (same size)
     for i in range(3):
-        relative_window_x_pos = 150 * i + 50  # starts 50 from edge of house and 50 between each window
-        draw_window(turtle_cursor, x_house + relative_window_x_pos,   y_house + 400, 100, 100)
+        relative_window_x_pos = 1/10 * world_width * i + 1/30 * world_width
+        draw_window(turtle_cursor, x_house + relative_window_x_pos, y_house + 4/15 * world_width, 1/15 * world_width, 1/15 * world_height)
 
     # draw one 1st story window (next to door)
-    draw_window(turtle_cursor, x_house + 250, y_house + 120, 150, 150)
+    draw_window(turtle_cursor, x_house + 1/6 * world_width, y_house + 1/10 * world_height, 1/10 * world_width, 1/10 * world_height)
 
     # draw two trees (one on each side of house, slightly different heights)
-    draw_branches(turtle_cursor, 75, 150, y_house)
-    draw_branches(turtle_cursor, 90, 1300, y_house)
+    draw_branches(turtle_cursor, 3/60 * world_width, 1/10 * world_width, y_house, world_width, "brown", "green")
+    draw_branches(turtle_cursor, 3/50 * world_width, 13/15 * world_width, y_house, world_width, "brown", "green")
     
     # draw two clouds above house
-    x_cloud = 300
-    y_cloud = 1200
-    myFlatCloud(turtle_cursor, x_cloud, y_cloud)
-    radius = 50 
-    x_bcloud = 900
-    y_bcloud = 1300
-    myBumpyCloud(turtle_cursor, radius, x_bcloud, y_bcloud, cloud_color="blue")
+    x_cloud = 1/5 * world_width
+    y_cloud = 4/5 * world_height
+    draw_flatcloud(turtle_cursor, x_cloud, y_cloud, world_width)
+    radius = 1/30 * world_width
+    x_bcloud = 9/15 * world_width
+    y_bcloud = 13/15 * world_height
+    draw_bumpycloud(turtle_cursor, world_width, radius, x_bcloud, y_bcloud, cloud_color="blue")
 
     # keep screen on until closed by user
     t.mainloop()
 
 
-def draw_branches(t, branch_length, start_x, start_y):
-    t.penup() # lift the pen
-    t.goto(start_x, start_y) # place it on x, y
-    t.setheading(90) # point the pen upwards
-    t.pendown() # put the pen down
-    draw_branch(t, branch_length)
+def draw_branches(t, branch_length, x_pos, y_pos, world_width, color_branch, color_leaves):
+    """
+    Draw branches at given position of given branch_length.
+
+    :param t: turtle cursor
+    :param branch_length: branch_length (in pixels)
+    :param start_x: left-most x position of first branch (in pixels)
+    :param start_y: bottom-most y position of first branch (in pixels)
+    :return: None
+    """
+    t.penup()
+    t.goto(x_pos, y_pos)
+    t.setheading(90)
+    t.pendown()
+    draw_branch(t, branch_length, world_width, color_branch, color_leaves)
+
+def draw_branch(t, branch_length, world_width, color_branch, color_leaves):
+    """
+    Draw branches off of initial branch recursively.
+
+    :param t: turtle cursor
+    :param branch_length: branch_length (in pixels)
+    """
+    if branch_length > 1/300 * world_width:
+        t.color(color_branch)
+        t.forward(branch_length)
+        # save state
+        pos = t.position()
+        heading = t.heading()
+        # draw right branch
+        t.right(2/150 * world_width)
+        draw_branch(t, branch_length - 1/100 * world_width, world_width, color_branch, color_leaves)
+        # restore state and draw left branch
+        t.penup()
+        t.goto(pos)
+        t.setheading(heading)
+        t.pendown()
+        t.left(4/150 * world_width)
+        draw_branch(t, branch_length - 1/100 * world_width, world_width, color_branch, color_leaves)
+        # restore state
+        t.penup()
+        t.goto(pos)
+        t.setheading(heading)
+        t.pendown()
+    else:
+        # draw leaves if branch short enough
+        draw_leaves(t, color_branch, color_leaves, world_width)
+    t.penup()
+
+def draw_leaves(t, color_branch, color_leaves, world_width):
+    """
+    Draw leaves off of smallest last branch.
+
+    :param t: turtle cursor
+    """
+    t.penup()
+    t.forward(1/150 * world_width)
+    t.pendown()
+    t.color(color_leaves)
+    t.begin_fill()
+    t.circle(1/300 * world_width)
+    t.end_fill()
+    t.color(color_branch)
+    t.right(18/150 * world_width)
+    t.penup()
+    t.forward(1/150 * world_width)
+    t.pendown()
 
 
-def draw_door(cursor, x_pos, y_pos, width, height):
+def draw_door(cursor, x_pos, y_pos, width, height, world_width):
     """
     Draw door at given position of given size.
 
@@ -80,7 +144,7 @@ def draw_door(cursor, x_pos, y_pos, width, height):
     # draw doorknob
     cursor.goto(x_pos + width * 4/5, y_pos + height * 1/2)
     cursor.down()
-    cursor.circle(width/25)
+    cursor.circle(width/(1/60 * world_width))
     cursor.up()
 
 
@@ -140,60 +204,11 @@ def draw_single_line(cursor, x_start, y_start, length, heading):  # todo test
     cursor.forward(length)
     cursor.up()
 
-
-def draw_branch(t, branch_length):
-    if branch_length > 5:
-        t.color('brown')
-        t.forward(branch_length)
-
-        # save state
-        pos = t.position()
-        heading = t.heading()
-
-        # draw right branch
-        t.right(20)
-        draw_branch(t, branch_length - 15)
-
-        # restore state and draw left branch
-        t.penup()
-        t.goto(pos)
-        t.setheading(heading)
-        t.pendown()
-        t.left(40)
-        draw_branch(t, branch_length - 15)
-
-        # restore state
-        t.penup()
-        t.goto(pos)
-        t.setheading(heading)
-        t.pendown()
-    else:
-        # draw leaves if branch short enough
-        draw_leaves(t)
-        
-    t.penup()  # lift the pen
-
-
-def draw_leaves(t):
-    t.penup() # lift the pen
-    t.forward(10) # move forward 10
-    t.pendown() # put the pen down
-    t.color("green") # set the color to green
-    t.begin_fill()
-    t.circle(5)
-    t.end_fill()
-    t.color("brown") # reset the color
-    t.right(180) # turn right 180 degrees
-    t.penup() # lift the pen
-    t.forward(10) # move forward 10    
-    t.pendown() # put the pen down
-
-
 def draw_garage_door(t, start_x, start_y, width, height):
-    t.penup() # lift the pen
-    t.goto(start_x, start_y) # place it on x, y
-    t.setheading(0) # point the pen right
-    t.pendown() # put the pen down
+    t.penup()
+    t.goto(start_x, start_y)
+    t.setheading(0)
+    t.pendown()
     for _ in range(2):
         t.forward(width)
         t.left(90)
@@ -202,61 +217,60 @@ def draw_garage_door(t, start_x, start_y, width, height):
 
     for i in range(1, 11):
         t.penup()
-        t.goto(start_x, start_y + i * height / 10)
+        t.goto(start_x, start_y + i * (height / 10))
         t.pendown()
         t.forward(width)
 
     t.up()
 
 
-def myFlatCloud(my_turtle, x_cloud, y_cloud):
+def draw_flatcloud(my_turtle, x_cloud, y_cloud, world_width):
     my_turtle.pu()
     my_turtle.setheading(0)
     my_turtle.setpos(x_cloud,y_cloud)
     my_turtle.pd()
-    my_turtle.color('blue')
-    my_turtle.forward(150)
-    my_turtle.left(90)
+    my_turtle.color("blue")
+    my_turtle.forward(1/10 * world_width)
+    my_turtle.left(9/150 * world_width)
     turt_pos = my_turtle.pos()
-    my_turtle.forward(30)
+    my_turtle.forward(3/150 * world_width)
 
     for i in range (1,3):
         for i in range(1,15):
-            my_turtle.left(10)
-            my_turtle.forward(10)
-        my_turtle.left(210)
+            my_turtle.left(1/150 * world_width)
+            my_turtle.forward(1/150 * world_width)
+        my_turtle.left(21/150 * world_width)
 
         for i in range(1,20):
-            my_turtle.left(10)
-            my_turtle.forward(10) 
-        my_turtle.left(190)
-    my_turtle.left(160)
+            my_turtle.left(1/150 * world_width)
+            my_turtle.forward(1/150 * world_width)
+        my_turtle.left(19/150 * world_width)
+    my_turtle.left(16/150 * world_width)
     current_pos = my_turtle.pos()
     my_turtle.forward((current_pos[1]-turt_pos[1]))
-    my_turtle.left(90)
+    my_turtle.left(9/150 * world_width)
     my_turtle.forward((turt_pos[0]-current_pos[0]))
 
 
-def ellipse(my_turtle, radius, color):  # todo add second radius input?
+def ellipse(my_turtle, radius, color, world_width):  # todo add second radius input?
     my_turtle.color(color,color)
     my_turtle.begin_fill()
     for i in range(2):
-        my_turtle.circle(radius,90)
-        my_turtle.circle(radius//2,90)
+        my_turtle.circle(radius,(9/150 * world_width))
+        my_turtle.circle(radius//2,(9/150 * world_width))
     my_turtle.end_fill()
 
 
-def myBumpyCloud(my_turtle, radius, x_cloud, y_cloud, cloud_color="blue"):
+def draw_bumpycloud(my_turtle, world_width, radius, x_cloud, y_cloud, cloud_color="blue"):
     my_turtle.pu()
     my_turtle.setheading(0)
-    my_turtle.setpos(x_cloud,y_cloud)
+    my_turtle.setpos(x_cloud, y_cloud)
     my_turtle.pd()
-    ellipse(my_turtle, radius,cloud_color)
+    ellipse(my_turtle, radius, cloud_color, world_width)
     my_turtle.forward(radius)
     for i in range(1,7):
-        ellipse(my_turtle, radius,cloud_color)
+        ellipse(my_turtle, radius, cloud_color, world_width)
         my_turtle.right(60)
 
-
 if __name__ == '__main__':
-    draw_house()
+    draw_house(1500, 1500)
