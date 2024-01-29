@@ -5,7 +5,7 @@ Drawing a house using Turtle Graphics for BIODS 253 project in team of three.
 
 `git clone git@github.com/conormesser/bm-e-house`
 
-No packages are needed to run the code beyond base Python. Any python version should have the turtle package (and tkinter), but if you run into issues, the code was tested using a conda installation of Python3.9.
+`conda env create -f conda_env.yml`
 
 ## Running
 
