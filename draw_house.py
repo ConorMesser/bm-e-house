@@ -203,7 +203,7 @@ def draw_rect(my_turtle, x_pos, y_pos, width, height):  # todo test
     my_turtle.down()
     my_turtle.setheading(90)  # todo add as input? with default
 
-    for dim in (height, width)*2:  # todo make clearer
+    for dim in (height, width, height, width):
         my_turtle.forward(dim)
         my_turtle.right(90)
     my_turtle.up()
@@ -228,15 +228,7 @@ def draw_single_line(my_turtle, x_start, y_start, length, heading):  # todo test
 
 
 def draw_garage_door(my_turtle, start_x, start_y, width, height):
-    my_turtle.penup()
-    my_turtle.goto(start_x, start_y)
-    my_turtle.setheading(0)
-    my_turtle.pendown()
-    for _ in range(2):
-        my_turtle.forward(width)
-        my_turtle.left(90)
-        my_turtle.forward(height)
-        my_turtle.left(90)
+    draw_rect(my_turtle, start_x, start_y, width, height)
 
     for i in range(1, 11):
         my_turtle.penup()
