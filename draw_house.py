@@ -54,8 +54,8 @@ def draw_house():
     y_bcloud = 1300
     myBumpyCloud(turtle_cursor, radius, x_bcloud, y_bcloud, cloud_color="blue")
 
-    actual_ps = os.path.join('/Users/nikkim/Documents/BIODS253/bm-e-house/nm_test_data', 'test_house.ps')
-    actual_png = os.path.join('/Users/nikkim/Documents/BIODS253/bm-e-house/nm_test_data', 'test_house.png')
+    actual_ps = os.path.join('~/nm_test_data', 'test_house.ps')
+    actual_png = os.path.join('~/nm_test_data', 'test_house.png')
     canvas = t.getcanvas()
     canvas.postscript(file=actual_ps)
     with Image.open(actual_ps) as im:
