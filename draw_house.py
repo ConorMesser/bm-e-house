@@ -21,42 +21,50 @@ def draw_house(world_width, world_height, skip_trees=False):
     my_turtle.penup()
 
     # draw house
-    x_house = 1/5 * world_width
-    y_house = 1/15 * world_height
-    draw_rect(my_turtle, x_house, y_house, 1/3 * world_width, 6/15 * world_height)
+    x_house = world_width / 5
+    y_house = world_height / 15
+    house_width = world_width / 3
+    house_height = world_height * 6 / 15
+    draw_rect(my_turtle, x_house, y_house, house_width, house_height)
 
     # draw garage
-    x_garage = x_house + 1/3 * world_width
-    draw_rect(my_turtle, x_garage, y_house, 1/5 * world_width, 4/15 * world_height)
+    x_garage = x_house + house_width
+    garage_width = world_width / 5
+    garage_height = house_height * 2 / 3
+    draw_rect(my_turtle, x_garage, y_house, garage_width, garage_height)
 
     # draw (2) garage doors on garage
-    draw_garage_door(my_turtle, x_garage + 0.03 * world_width, y_house, 1/15 * world_width, 3/15 * world_height)
-    draw_garage_door(my_turtle, x_garage + 0.1 * world_width, y_house, 1/15 * world_width, 3/15 * world_height)
+    garage_door_width = garage_width / 3
+    garage_door_height = garage_height * 3 / 4
+    draw_garage_door(my_turtle, x_garage + garage_width / 2 - garage_door_width * 1.1,
+                     y_house, garage_door_width, garage_door_height)
+    draw_garage_door(my_turtle, x_garage + garage_width / 2 + garage_door_width * 0.1,
+                     y_house, garage_door_width, garage_door_height)
 
     # draw door on house
-    draw_door(my_turtle, x_house + 1/15 * world_width, y_house, 1/15 * world_width, 1/5 * world_height, world_width)
+    draw_door(my_turtle, x_house + house_width / 5, y_house, house_width / 5, house_height / 2)
 
     # draw three 2nd story windows (same size)
     for i in range(3):
-        relative_window_x_pos = 1/10 * world_width * i + 1/30 * world_width
-        draw_window(my_turtle, x_house + relative_window_x_pos, y_house + 4/15 * world_height, 1/15 * world_width, 1/15 * world_height)
+        window_width = house_width / 5
+        gap_width = (house_width - (window_width * 3)) / 4
+        relative_window_x_pos = gap_width * (i + 1) + window_width * i
+        draw_window(my_turtle, x_house + relative_window_x_pos, y_house + house_height * 2 / 3,
+                    window_width, house_height / 6)
 
     # draw one 1st story window (next to door)
-    draw_window(my_turtle, x_house + 1/6 * world_width, y_house + 1/10 * world_height, 1/10 * world_width, 1/10 * world_height)
+    draw_window(my_turtle, x_house + house_width / 2, y_house + house_height / 4,
+                house_width * 3 / 10, house_height / 4)
 
     # draw two trees (one on each side of house, slightly different heights)
     if not skip_trees:
-        draw_branches(my_turtle, 3/60 * world_width, 1/10 * world_width, y_house, world_width, "brown", "green")
-        draw_branches(my_turtle, 3/50 * world_width, 13/15 * world_width, y_house, world_width, "brown", "green")
+        draw_branches(my_turtle, world_width / 20, world_width / 10, y_house, world_width, "brown", "green")
+        draw_branches(my_turtle,  world_width * 3/50, world_width * 13/15, y_house, world_width, "brown", "green")
     
     # draw two clouds above house
-    x_cloud = 1/5 * world_width
-    y_cloud = 4/5 * world_height
-    draw_flat_cloud(my_turtle, x_cloud, y_cloud, world_width)
-    radius = 1/30 * world_width
-    x_bcloud = 9/15 * world_width
-    y_bcloud = 13/15 * world_height
-    draw_bumpy_cloud(my_turtle, world_width, radius, x_bcloud, y_bcloud, cloud_color="blue")
+    draw_flat_cloud(my_turtle, world_width / 5, world_height * 4 / 5, world_width)
+    draw_bumpy_cloud(my_turtle, world_width / 30,
+                     world_width * 3/5, world_height * 13/15, cloud_color="blue")
 
     # keep screen on until closed by user
     t.mainloop()
@@ -92,6 +100,7 @@ def draw_branch(my_turtle, branch_length, world_width, color_branch, color_leave
     :param color_branch: color of this branch
     :param color_leaves: color of the leaves for this branch
     """
+    # todo define branch_length - 1/100 * world_width as something specific
     if branch_length > 1/300 * world_width:  # todo change back to static?
         my_turtle.color(color_branch)
         my_turtle.forward(branch_length)
@@ -238,7 +247,7 @@ def draw_garage_door(my_turtle, start_x, start_y, width, height):
     my_turtle.up()
 
 
-def draw_flat_cloud(my_turtle, x_cloud, y_cloud, world_width):
+def draw_flat_cloud(my_turtle, x_cloud, y_cloud, world_width):  # todo remove world_width
     my_turtle.pu()
     my_turtle.setheading(0)
     my_turtle.setpos(x_cloud,y_cloud)
@@ -266,7 +275,7 @@ def draw_flat_cloud(my_turtle, x_cloud, y_cloud, world_width):
     my_turtle.forward((turt_pos[0]-current_pos[0]))
 
 
-def ellipse(my_turtle, radius, color, world_width):  # todo add second radius input?
+def ellipse(my_turtle, radius, color):  # todo add second radius input?
     my_turtle.color(color,color)
     my_turtle.begin_fill()
     for i in range(2):
@@ -275,17 +284,17 @@ def ellipse(my_turtle, radius, color, world_width):  # todo add second radius in
     my_turtle.end_fill()
 
 
-def draw_bumpy_cloud(my_turtle, world_width, radius, x_cloud, y_cloud, cloud_color="blue"):
+def draw_bumpy_cloud(my_turtle, radius, x_cloud, y_cloud, cloud_color="blue"):
     my_turtle.pu()
     my_turtle.setheading(0)
     my_turtle.setpos(x_cloud, y_cloud)
     my_turtle.pd()
-    ellipse(my_turtle, radius, cloud_color, world_width)
+    ellipse(my_turtle, radius, cloud_color)
     my_turtle.forward(radius)
     for i in range(1,7):
-        ellipse(my_turtle, radius, cloud_color, world_width)
+        ellipse(my_turtle, radius, cloud_color)
         my_turtle.right(60)
 
 
 if __name__ == '__main__':
-    draw_house(700, 700, skip_trees=False)
+    draw_house(700, 700, skip_trees=True)
