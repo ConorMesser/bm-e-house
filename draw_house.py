@@ -68,8 +68,11 @@ def draw_branches(my_turtle, branch_length, x_pos, y_pos, world_width, color_bra
 
     :param my_turtle: turtle cursor
     :param branch_length: branch_length (in pixels)
-    :param start_x: left-most x position of first branch (in pixels)
-    :param start_y: bottom-most y position of first branch (in pixels)
+    :param x_pos: left-most x position of first branch (in pixels)
+    :param y_pos: bottom-most y position of first branch (in pixels)
+    :param world_width: width of the screen (in pixels)
+    :param color_branch: color of this branch
+    :param color_leaves: color of the leaves for this branch
     :return: None
     """
     my_turtle.penup()
@@ -85,8 +88,11 @@ def draw_branch(my_turtle, branch_length, world_width, color_branch, color_leave
 
     :param my_turtle: turtle cursor
     :param branch_length: branch_length (in pixels)
+    :param world_width: width of the screen (in pixels)
+    :param color_branch: color of this branch
+    :param color_leaves: color of the leaves for this branch
     """
-    if branch_length > 1/300 * world_width:
+    if branch_length > 1/300 * world_width:  # todo change back to static?
         my_turtle.color(color_branch)
         my_turtle.forward(branch_length)
         # save state
@@ -112,11 +118,15 @@ def draw_branch(my_turtle, branch_length, world_width, color_branch, color_leave
         draw_leaves(my_turtle, color_branch, color_leaves, world_width)
     my_turtle.penup()
 
+
 def draw_leaves(my_turtle, color_branch, color_leaves, world_width):
     """
     Draw leaves off of smallest last branch.
 
     :param my_turtle: turtle cursor
+    :param world_width: width of the screen (in pixels)
+    :param color_branch: color of this branch
+    :param color_leaves: color of the leaves for this branch
     """
     my_turtle.penup()
     my_turtle.forward(1/150 * world_width)
@@ -132,7 +142,7 @@ def draw_leaves(my_turtle, color_branch, color_leaves, world_width):
     my_turtle.pendown()
 
 
-def draw_door(my_turtle, x_pos, y_pos, width, height, world_width):
+def draw_door(my_turtle, x_pos, y_pos, width, height):
     """
     Draw door at given position of given size.
 
