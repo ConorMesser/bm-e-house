@@ -155,6 +155,7 @@ def draw_door(my_turtle, x_pos, y_pos, width, height):
     """
     Draw door at given position of given size.
 
+    :param my_turtle: turtle cursor
     :param x_pos: left-most x position of door (in pixels)
     :param y_pos: bottom-most y position of door (in pixels)
     :param width: width of door (in pixels)
@@ -227,12 +228,12 @@ def draw_single_line(my_turtle, x_start, y_start, length, heading):  # todo test
     my_turtle.up()
 
 
-def draw_garage_door(my_turtle, start_x, start_y, width, height):
-    draw_rect(my_turtle, start_x, start_y, width, height)
+def draw_garage_door(my_turtle, x_pos, y_pos, width, height):
+    draw_rect(my_turtle, x_pos, y_pos, width, height)
 
     for i in range(1, 11):
         my_turtle.penup()
-        my_turtle.goto(start_x, start_y + i * (height / 10))
+        my_turtle.goto(x_pos, y_pos + i * (height / 10))
         my_turtle.pendown()
         my_turtle.forward(width)
 
