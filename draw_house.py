@@ -39,7 +39,7 @@ def draw_house(world_width, world_height, skip_trees=False):
     # draw three 2nd story windows (same size)
     for i in range(3):
         relative_window_x_pos = 1/10 * world_width * i + 1/30 * world_width
-        draw_window(my_turtle, x_house + relative_window_x_pos, y_house + 4/15 * world_width, 1/15 * world_width, 1/15 * world_height)
+        draw_window(my_turtle, x_house + relative_window_x_pos, y_house + 4/15 * world_height, 1/15 * world_width, 1/15 * world_height)
 
     # draw one 1st story window (next to door)
     draw_window(my_turtle, x_house + 1/6 * world_width, y_house + 1/10 * world_height, 1/10 * world_width, 1/10 * world_height)
