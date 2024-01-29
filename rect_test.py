@@ -2,7 +2,7 @@ from PIL import Image
 import turtle
 import matplotlib.testing.compare as mpcompare
 import unittest
-import shapes
+import draw_house
 import tempfile
 import os.path
 
@@ -26,19 +26,22 @@ class TestShapes(unittest.TestCase):
     def setUp(self):
         turtle.reset()
 
-    def test_circle(self):
+    def test_rect(self):
         t = turtle.getturtle()
-        shapes.draw_circle(t,20,20,20)
+        draw_house.draw_rect(t, 20, 20, 40, 40)
         t.hideturtle()
-        self.assertIsNone(self._compare_canvas_to_expected(expected_filename='testdata/circle-20.png'))
+        self.assertIsNone(self._compare_canvas_to_expected(expected_filename='/Users/nikkim/Documents/BIODS253/bm-e-house/nm_test_data/test_rect.png'))
 
-    def test_circle_fail(self):
+    def test_rect_fail(self):
         # test that a badly sized circle fails to compare as equal
         t = turtle.getturtle()
         shapes.draw_circle(t,20,20,29)
         t.hideturtle()
-        self.assertIsNotNone(self._compare_canvas_to_expected(expected_filename='testdata/circle-20.png'))
+        self.assertIsNotNone(self._compare_canvas_to_expected(expected_filename='/Users/nikkim/Documents/BIODS253/bm-e-house/nm_test_data/test_rect.png'))
 
+    def test_house(self):
+        draw_house()
+        self.assertIsNone(self._compare_canvas_to_expected(expected_filename='/Users/nikkim/Documents/BIODS253/bm-e-house/nm_test_data/test_house.png'))
 
 
 
