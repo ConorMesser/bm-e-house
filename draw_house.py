@@ -93,14 +93,14 @@ def draw_branch(my_turtle, branch_length, world_width, color_branch, color_leave
         pos = my_turtle.position()
         heading = my_turtle.heading()
         # draw right branch
-        my_turtle.right(2/150 * world_width)
+        my_turtle.right(20)
         draw_branch(my_turtle, branch_length - 1/100 * world_width, world_width, color_branch, color_leaves)
         # restore state and draw left branch
         my_turtle.penup()
         my_turtle.goto(pos)
         my_turtle.setheading(heading)
         my_turtle.pendown()
-        my_turtle.left(4/150 * world_width)
+        my_turtle.left(40)
         draw_branch(my_turtle, branch_length - 1/100 * world_width, world_width, color_branch, color_leaves)
         # restore state
         my_turtle.penup()
@@ -126,7 +126,7 @@ def draw_leaves(my_turtle, color_branch, color_leaves, world_width):
     my_turtle.circle(1/300 * world_width)
     my_turtle.end_fill()
     my_turtle.color(color_branch)
-    my_turtle.right(18/150 * world_width)
+    my_turtle.right(180)
     my_turtle.penup()
     my_turtle.forward(1/150 * world_width)
     my_turtle.pendown()
@@ -147,7 +147,7 @@ def draw_door(my_turtle, x_pos, y_pos, width, height, world_width):
     # draw doorknob
     my_turtle.goto(x_pos + width * 4/5, y_pos + height * 1/2)
     my_turtle.down()
-    my_turtle.circle(width/(1/60 * world_width))
+    my_turtle.circle(width/25)
     my_turtle.up()
 
 
@@ -235,24 +235,24 @@ def draw_flat_cloud(my_turtle, x_cloud, y_cloud, world_width):
     my_turtle.pd()
     my_turtle.color("blue")
     my_turtle.forward(1/10 * world_width)
-    my_turtle.left(9/150 * world_width)
+    my_turtle.left(90)
     turt_pos = my_turtle.pos()
     my_turtle.forward(3/150 * world_width)
 
     for i in range (1,3):
         for i in range(1,15):
-            my_turtle.left(1/150 * world_width)
+            my_turtle.left(10)
             my_turtle.forward(1/150 * world_width)
-        my_turtle.left(21/150 * world_width)
+        my_turtle.left(210)
 
         for i in range(1,20):
-            my_turtle.left(1/150 * world_width)
+            my_turtle.left(10)
             my_turtle.forward(1/150 * world_width)
-        my_turtle.left(19/150 * world_width)
-    my_turtle.left(16/150 * world_width)
+        my_turtle.left(190)
+    my_turtle.left(160)
     current_pos = my_turtle.pos()
     my_turtle.forward((current_pos[1]-turt_pos[1]))
-    my_turtle.left(9/150 * world_width)
+    my_turtle.left(90)
     my_turtle.forward((turt_pos[0]-current_pos[0]))
 
 
@@ -260,8 +260,8 @@ def ellipse(my_turtle, radius, color, world_width):  # todo add second radius in
     my_turtle.color(color,color)
     my_turtle.begin_fill()
     for i in range(2):
-        my_turtle.circle(radius,(9/150 * world_width))
-        my_turtle.circle(radius//2,(9/150 * world_width))
+        my_turtle.circle(radius, 90)
+        my_turtle.circle(radius//2, 90)
     my_turtle.end_fill()
 
 
