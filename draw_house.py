@@ -1,11 +1,12 @@
 import turtle as t
 
 
-def draw_house(world_width, world_height):
+def draw_house(world_width, world_height, skip_trees=False):
     """Draw house with garage, 1 door, 4 windows, 2 trees, and 2 clouds on blank canvas.
 
     :param world_width: width of world (in pixels)
     :param world_height: height of world (in pixels)
+    :param skip_trees: optional boolean parameter to skip drawing trees, to speed up graphics (default False)
 
     Note: Utilizes the turtle graphics package.
     """
@@ -44,8 +45,9 @@ def draw_house(world_width, world_height):
     draw_window(my_turtle, x_house + 1/6 * world_width, y_house + 1/10 * world_height, 1/10 * world_width, 1/10 * world_height)
 
     # draw two trees (one on each side of house, slightly different heights)
-    draw_branches(my_turtle, 3/60 * world_width, 1/10 * world_width, y_house, world_width, "brown", "green")
-    draw_branches(my_turtle, 3/50 * world_width, 13/15 * world_width, y_house, world_width, "brown", "green")
+    if not skip_trees:
+        draw_branches(my_turtle, 3/60 * world_width, 1/10 * world_width, y_house, world_width, "brown", "green")
+        draw_branches(my_turtle, 3/50 * world_width, 13/15 * world_width, y_house, world_width, "brown", "green")
     
     # draw two clouds above house
     x_cloud = 1/5 * world_width
