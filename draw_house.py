@@ -8,7 +8,7 @@ def draw_house(world_width, world_height, skip_trees=False):
     :param world_height: height of world (in pixels)
     :param skip_trees: optional boolean parameter to skip drawing trees, to speed up graphics (default False)
 
-    Note: Utilizes the turtle graphics package.
+    Note: Utilizes the turtle graphics package. If height is greater than screen size, things will get scaled weirdly.
     """
     # set up screen
     screen = t.Screen()
@@ -278,4 +278,4 @@ def draw_bumpy_cloud(my_turtle, world_width, radius, x_cloud, y_cloud, cloud_col
 
 
 if __name__ == '__main__':
-    draw_house(1500, 1500)
+    draw_house(700, 700, skip_trees=False)
