@@ -1,5 +1,6 @@
 import turtle as t
-
+import os
+from PIL import Image
 
 def draw_house():
     """Draw house with garage, 1 door, 4 windows, 2 trees, and 2 clouds on blank canvas.
@@ -13,7 +14,7 @@ def draw_house():
 
     # create Turtle Object
     turtle_cursor = t.Turtle()
-    turtle_cursor.speed(1000)
+    turtle_cursor.speed(0)
     turtle_cursor.penup()
 
     # draw house with height ~600, width ~500
@@ -53,6 +54,12 @@ def draw_house():
     y_bcloud = 1300
     myBumpyCloud(turtle_cursor, radius, x_bcloud, y_bcloud, cloud_color="blue")
 
+    actual_ps = os.path.join('/Users/nikkim/Documents/BIODS253/bm-e-house/nm_test_data', 'test_house.ps')
+    actual_png = os.path.join('/Users/nikkim/Documents/BIODS253/bm-e-house/nm_test_data', 'test_house.png')
+    canvas = t.getcanvas()
+    canvas.postscript(file=actual_ps)
+    with Image.open(actual_ps) as im:
+        im.save(actual_png)
     # keep screen on until closed by user
     t.mainloop()
 
