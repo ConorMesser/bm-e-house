@@ -200,9 +200,10 @@ def draw_rect(my_turtle, x_pos, y_pos, width, height):  # todo test
     :param height: height of rectangle (in pixels)
     :return: None
     """
+    my_turtle.up()
     my_turtle.goto(x_pos, y_pos)
     my_turtle.down()
-    my_turtle.setheading(90)  # todo add as input? with default
+    my_turtle.setheading(90)
 
     for dim in (height, width, height, width):
         my_turtle.forward(dim)
@@ -240,7 +241,15 @@ def draw_garage_door(my_turtle, x_pos, y_pos, width, height):
     my_turtle.up()
 
 
-def draw_flat_cloud(my_turtle, x_cloud, y_cloud, world_width):  # todo remove world_width
+def draw_flat_cloud(my_turtle, x_cloud, y_cloud, world_width):
+    """
+    Draw cloud with flat bottom at given position.
+
+    :param my_turtle: Turtle object
+    :param x_cloud: left-most x position of cloud (in pixels)
+    :param y_cloud: bottom-most y position of rectangle (in pixels)
+    :return: None
+    """
     my_turtle.pu()
     my_turtle.setheading(0)
     my_turtle.setpos(x_cloud,y_cloud)
@@ -278,6 +287,15 @@ def ellipse(my_turtle, radius, color):  # todo add second radius input?
 
 
 def draw_bumpy_cloud(my_turtle, radius, x_cloud, y_cloud, cloud_color="blue"):
+    """
+    Draw cloud with all bumpy edges at given position.
+
+    :param my_turtle: Turtle object
+    :param radius:
+    :param x_cloud: left-most x position of cloud (in pixels)
+    :param y_cloud: bottom-most y position of rectangle (in pixels)
+    :return: None
+    """
     my_turtle.pu()
     my_turtle.setheading(0)
     my_turtle.setpos(x_cloud, y_cloud)
