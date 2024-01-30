@@ -7,7 +7,7 @@ from draw_house import draw_house
 def gen_house_image():
     draw_house(900, 700, keep_window_open=False)
 
-    save_turtle_image('test_house2')
+    save_turtle_image('test_house')
 
 
 def gen_rect_image():
@@ -24,18 +24,18 @@ def gen_rect_image():
         t.forward(40)
 
     t.hideturtle()
-    save_turtle_image('test_rect2')
+    save_turtle_image('test_rect')
 
 def gen_line_image():
     t.setup(900, 700)
     t.screensize(900, 700)
 
-    t.setheading(45)
+    t.setheading(90)
     t.pendown()
     t.forward(100)
 
     t.hideturtle()
-    save_turtle_image('test_line2')
+    save_turtle_image('test_line')
 
 
 def save_turtle_image(filename):
