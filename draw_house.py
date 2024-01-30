@@ -169,6 +169,7 @@ def draw_door(my_turtle, x_pos, y_pos, width, height):
     draw_rect(my_turtle, x_pos, y_pos, width, height)
 
     # draw doorknob
+    my_turtle.up()
     my_turtle.goto(x_pos + width * 4/5, y_pos + height * 1/2)
     my_turtle.down()
     my_turtle.circle(width/25)
@@ -226,6 +227,7 @@ def draw_single_line(my_turtle, x_start, y_start, length, heading):  # todo test
     :param heading: heading along which to draw line
     :return: None
     """
+    my_turtle.up()
     my_turtle.goto(x_start, y_start)
     my_turtle.setheading(heading)
     my_turtle.down()
