@@ -54,12 +54,6 @@ def draw_house():
     y_bcloud = 1300
     myBumpyCloud(turtle_cursor, radius, x_bcloud, y_bcloud, cloud_color="blue")
 
-    actual_ps = os.path.join('~/nm_test_data', 'test_house.ps')
-    actual_png = os.path.join('~/nm_test_data', 'test_house.png')
-    canvas = t.getcanvas()
-    canvas.postscript(file=actual_ps)
-    with Image.open(actual_ps) as im:
-        im.save(actual_png)
     # keep screen on until closed by user
     t.mainloop()
 
@@ -120,6 +114,7 @@ def draw_rect(cursor, x_pos, y_pos, width, height):
     :param height: height of rectangle (in pixels)
     :return: None
     """
+    cursor.up()
     cursor.goto(x_pos, y_pos)
     cursor.down()
     cursor.setheading(90)

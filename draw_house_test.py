@@ -1,11 +1,11 @@
 from PIL import Image
-import turtle
+import turtle as t
 import matplotlib.testing.compare as mpcompare
 import unittest
-import draw_house
 import tempfile
 import os.path
 
+import draw_house
 
 #NM notes: TestShapes is inheriting from parent class unittest.TestCase 
 class TestShapes(unittest.TestCase):
@@ -16,33 +16,34 @@ class TestShapes(unittest.TestCase):
         with tempfile.TemporaryDirectory() as tmp_dirname:
             actual_ps = os.path.join(tmp_dirname, 'canvas.ps')
             actual_png = os.path.join(tmp_dirname, 'canvas.png')
-            canvas = turtle.getcanvas()
+            canvas = t.getcanvas()
             canvas.postscript(file=actual_ps)
             with Image.open(actual_ps) as im:
                 im.save(actual_png)
+
             return mpcompare.compare_images(expected_filename, actual_png, TOLERANCE)
 
-
     def setUp(self):
-        turtle.reset()
+        t.reset()
+        t.screensize(500, 500)
+        t.hideturtle()
+        # t.setworldcoordinates(0, 0, 500, 500)
+        self._turtle = t.Turtle()
 
     def test_rect(self):
-        t = turtle.getturtle()
-        draw_house.draw_rect(t, 20, 20, 40, 40)
-        t.hideturtle()
-        self.assertIsNone(self._compare_canvas_to_expected(expected_filename='~/nm_test_data/test_rect.png'))
+        draw_house.draw_rect(self._turtle, 20, 20, 40, 40)
+        self._turtle.hideturtle()
+        self.assertIsNone(self._compare_canvas_to_expected(expected_filename='./nm_test_data/test_rect2.png'))
 
     def test_rect_fail(self):
         # test that a badly sized circle fails to compare as equal
-        t = turtle.getturtle()
-        draw_house.draw_rect(t, 20, 20, 60,60)
+        draw_house.draw_rect(self._turtle, 20, 20, 60,60)
         t.hideturtle()
-        self.assertIsNotNone(self._compare_canvas_to_expected(expected_filename='~/nm_test_data/test_rect.png'))
+        self.assertIsNotNone(self._compare_canvas_to_expected(expected_filename='./nm_test_data/test_rect.png'))
 
     def test_house(self):
-        draw_house()
-        self.assertIsNone(self._compare_canvas_to_expected(expected_filename='~/nm_test_data/test_house.png'))
-
+        draw_house.draw_house()
+        self.assertIsNone(self._compare_canvas_to_expected(expected_filename='./nm_test_data/test_house.png'))
 
 
 if __name__ == '__main__':
