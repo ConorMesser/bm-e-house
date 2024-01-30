@@ -27,21 +27,23 @@ class TestShapes(unittest.TestCase):
         turtle.reset()
 
     def test_rect(self):
+        # test if a rectangle gets produced at the same location and with same size as test rectangle
         t = turtle.getturtle()
         draw_house.draw_rect(t, 20, 20, 40, 40)
         t.hideturtle()
-        self.assertIsNone(self._compare_canvas_to_expected(expected_filename='~/nm_test_data/test_rect.png'))
+        self.assertIsNone(self._compare_canvas_to_expected(expected_filename='./nm_test_data/test_rect.png'))
 
     def test_rect_fail(self):
-        # test that a badly sized circle fails to compare as equal
+        # test that a badly sized rectangle fails to compare as equal to the correctly positioned/sized rectangle 
         t = turtle.getturtle()
         draw_house.draw_rect(t, 20, 20, 60,60)
         t.hideturtle()
-        self.assertIsNotNone(self._compare_canvas_to_expected(expected_filename='~/nm_test_data/test_rect.png'))
+        self.assertIsNotNone(self._compare_canvas_to_expected(expected_filename='./nm_test_data/test_rect.png'))
 
     def test_house(self):
+        # test if house produced looks same as expected image (created earlier)
         draw_house()
-        self.assertIsNone(self._compare_canvas_to_expected(expected_filename='~/nm_test_data/test_house.png'))
+        self.assertIsNone(self._compare_canvas_to_expected(expected_filename='./nm_test_data/test_house.png'))
 
 
 
