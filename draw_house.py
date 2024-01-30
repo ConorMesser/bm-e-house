@@ -58,8 +58,8 @@ def draw_house(world_width, world_height, skip_trees=False):
 
     # draw two trees (one on each side of house, slightly different heights)
     if not skip_trees:
-        draw_branches(my_turtle, world_width / 20, world_width / 10, y_house, world_width, "brown", "green")
-        draw_branches(my_turtle,  world_width * 3/50, world_width * 13/15, y_house, world_width, "brown", "green")
+        draw_branches(my_turtle, world_width / 20, world_width / 10, y_house, "brown", "green")
+        draw_branches(my_turtle,  world_width * 3/50, world_width * 13/15, y_house, "brown", "green")
     
     # draw two clouds above house
     draw_flat_cloud(my_turtle, world_width / 5, world_height * 4 / 5, world_width)
@@ -70,7 +70,7 @@ def draw_house(world_width, world_height, skip_trees=False):
     t.mainloop()
 
 
-def draw_branches(my_turtle, branch_length, x_pos, y_pos, world_width, color_branch, color_leaves):
+def draw_branches(my_turtle, branch_length, x_pos, y_pos, color_branch, color_leaves):
     """
     Draw branches at given position of given branch_length.
 
@@ -87,10 +87,10 @@ def draw_branches(my_turtle, branch_length, x_pos, y_pos, world_width, color_bra
     my_turtle.goto(x_pos, y_pos)
     my_turtle.setheading(90)
     my_turtle.pendown()
-    draw_branch(my_turtle, branch_length, world_width, color_branch, color_leaves)
+    draw_branch(my_turtle, branch_length, color_branch, color_leaves)
 
 
-def draw_branch(my_turtle, branch_length, world_width, color_branch, color_leaves):
+def draw_branch(my_turtle, branch_length, color_branch, color_leaves, shortest_branch_length=5):
     """
     Draw branches off of initial branch recursively.
 
@@ -101,7 +101,8 @@ def draw_branch(my_turtle, branch_length, world_width, color_branch, color_leave
     :param color_leaves: color of the leaves for this branch
     """
     # todo define branch_length - 1/100 * world_width as something specific
-    if branch_length > 1/300 * world_width:  # todo change back to static?
+    offset_branch_length = branch_length - 15
+    if branch_length > shortest_branch_length: 
         my_turtle.color(color_branch)
         my_turtle.forward(branch_length)
         # save state
@@ -109,14 +110,14 @@ def draw_branch(my_turtle, branch_length, world_width, color_branch, color_leave
         heading = my_turtle.heading()
         # draw right branch
         my_turtle.right(20)
-        draw_branch(my_turtle, branch_length - 1/100 * world_width, world_width, color_branch, color_leaves)
+        draw_branch(my_turtle, offset_branch_length, color_branch, color_leaves)
         # restore state and draw left branch
         my_turtle.penup()
         my_turtle.goto(pos)
         my_turtle.setheading(heading)
         my_turtle.pendown()
         my_turtle.left(40)
-        draw_branch(my_turtle, branch_length - 1/100 * world_width, world_width, color_branch, color_leaves)
+        draw_branch(my_turtle, offset_branch_length, color_branch, color_leaves)
         # restore state
         my_turtle.penup()
         my_turtle.goto(pos)
@@ -124,11 +125,11 @@ def draw_branch(my_turtle, branch_length, world_width, color_branch, color_leave
         my_turtle.pendown()
     else:
         # draw leaves if branch short enough
-        draw_leaves(my_turtle, color_branch, color_leaves, world_width)
+        draw_leaves(my_turtle, color_branch, color_leaves)
     my_turtle.penup()
 
 
-def draw_leaves(my_turtle, color_branch, color_leaves, world_width):
+def draw_leaves(my_turtle, color_branch, color_leaves, leaf_size=5):
     """
     Draw leaves off of smallest last branch.
 
@@ -138,16 +139,16 @@ def draw_leaves(my_turtle, color_branch, color_leaves, world_width):
     :param color_leaves: color of the leaves for this branch
     """
     my_turtle.penup()
-    my_turtle.forward(1/150 * world_width)
+    my_turtle.forward(leaf_size*2)
     my_turtle.pendown()
     my_turtle.color(color_leaves)
     my_turtle.begin_fill()
-    my_turtle.circle(1/300 * world_width)
+    my_turtle.circle(leaf_size)
     my_turtle.end_fill()
     my_turtle.color(color_branch)
     my_turtle.right(180)
     my_turtle.penup()
-    my_turtle.forward(1/150 * world_width)
+    my_turtle.forward(leaf_size*2)
     my_turtle.pendown()
 
 
@@ -229,6 +230,7 @@ def draw_single_line(my_turtle, x_start, y_start, length, heading):  # todo test
 
 def draw_garage_door(my_turtle, start_x, start_y, width, height):
     draw_rect(my_turtle, start_x, start_y, width, height)
+    my_turtle.setheading(0)
 
     for i in range(1, 11):
         my_turtle.penup()
@@ -289,4 +291,4 @@ def draw_bumpy_cloud(my_turtle, radius, x_cloud, y_cloud, cloud_color="blue"):
 
 
 if __name__ == '__main__':
-    draw_house(700, 700, skip_trees=True)
+    draw_house(1500, 1500, skip_trees=False)
