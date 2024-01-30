@@ -1,12 +1,13 @@
 import turtle as t
 
 
-def draw_house(world_width, world_height, skip_trees=False):
+def draw_house(world_width, world_height, skip_trees=False, keep_window_open=True):
     """Draw house with garage, 1 door, 4 windows, 2 trees, and 2 clouds on blank canvas.
 
     :param world_width: width of world (in pixels)
     :param world_height: height of world (in pixels)
     :param skip_trees: optional boolean parameter to skip drawing trees, to speed up graphics (default False)
+    :param keep_window_open: optional boolean to keep window open until closing out (default True)
 
     Note: Utilizes the turtle graphics package. If height is greater than screen size, things will get scaled weirdly.
     """
@@ -67,7 +68,8 @@ def draw_house(world_width, world_height, skip_trees=False):
                      world_width * 3/5, world_height * 13/15, cloud_color="blue")
 
     # keep screen on until closed by user
-    t.mainloop()
+    if keep_window_open:
+        t.mainloop()
 
 
 def draw_branches(my_turtle, branch_length, x_pos, y_pos, color_branch, color_leaves):
@@ -310,4 +312,4 @@ def draw_bumpy_cloud(my_turtle, radius, x_cloud, y_cloud, cloud_color="blue"):
 
 
 if __name__ == '__main__':
-    draw_house(700, 700, skip_trees=True)
+    draw_house(1500, 1500, skip_trees=False, keep_window_open=True)
