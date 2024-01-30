@@ -27,21 +27,26 @@ class TestShapes(unittest.TestCase):
         t.reset()
         t.screensize(500, 500)
         t.hideturtle()
-        # t.setworldcoordinates(0, 0, 500, 500)
         self._turtle = t.Turtle()
+        self._turtle.hideturtle()
 
     def test_rect(self):
         draw_house.draw_rect(self._turtle, 20, 20, 40, 40)
-        self._turtle.hideturtle()
-        self.assertIsNone(self._compare_canvas_to_expected(expected_filename='./nm_test_data/test_rect2.png'))
+        self.assertIsNone(self._compare_canvas_to_expected(expected_filename='./nm_test_data/test_rect.png'))
 
     def test_rect_fail(self):
         # test that a badly sized circle fails to compare as equal
         draw_house.draw_rect(self._turtle, 20, 20, 60,60)
-        t.hideturtle()
         self.assertIsNotNone(self._compare_canvas_to_expected(expected_filename='./nm_test_data/test_rect.png'))
 
-    def test_house(self):
+    def test_line(self):
+        draw_house.draw_single_line(self._turtle, 0, 0, 100, 45)
+        self.assertIsNotNone(self._compare_canvas_to_expected(expected_filename='./nm_test_data/test_line.png'))
+
+    def test_only_house(self):
+        pass
+
+    def test_full_scene(self):
         draw_house.draw_house()
         self.assertIsNone(self._compare_canvas_to_expected(expected_filename='./nm_test_data/test_house.png'))
 
