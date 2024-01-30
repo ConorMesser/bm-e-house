@@ -15,6 +15,7 @@ def draw_house(world_width, world_height, skip_trees=False, keep_window_open=Tru
     screen = t.Screen()
     screen.setup(world_width, world_height)
     screen.setworldcoordinates(0, 0, world_width, world_height)
+    screen.clear()
 
     # create Turtle object
     my_turtle = t.Turtle()
@@ -59,8 +60,8 @@ def draw_house(world_width, world_height, skip_trees=False, keep_window_open=Tru
 
     # draw two trees (one on each side of house, slightly different heights)
     if not skip_trees:
-        draw_branches(my_turtle, world_width / 20, world_width / 10, y_house, "brown", "green")
-        draw_branches(my_turtle,  world_width * 3/50, world_width * 13/15, y_house, "brown", "green")
+        draw_branches(my_turtle, world_width / 15, world_width / 10, y_house, "brown", "green")
+        draw_branches(my_turtle,  world_width / 20, world_width * 13/15, y_house, "brown", "green")
     
     # draw two clouds above house
     draw_flat_cloud(my_turtle, world_width / 5, world_height * 4 / 5, world_width)
@@ -312,4 +313,4 @@ def draw_bumpy_cloud(my_turtle, radius, x_cloud, y_cloud, cloud_color="blue"):
 
 
 if __name__ == '__main__':
-    draw_house(1500, 1500, skip_trees=False, keep_window_open=True)
+    draw_house(900, 700, skip_trees=False, keep_window_open=True)
